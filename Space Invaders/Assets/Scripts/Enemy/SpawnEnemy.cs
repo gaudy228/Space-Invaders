@@ -8,6 +8,9 @@ public class SpawnEnemy : MonoBehaviour
     [SerializeField] private int _height;
     [SerializeField] private Enemy[] _enemyPrefabs;
     [SerializeField] private Vector2 _offsetPos;
+    [SerializeField] private Score _score;
+    [SerializeField] private PlayerWin _win;
+    [SerializeField] private PlayerHP _hp;
     public Enemy[,] GridEnemys { get; private set; }
     private void Awake()
     {
@@ -23,6 +26,7 @@ public class SpawnEnemy : MonoBehaviour
                 }
                 Vector2 worldPos = new Vector2(_offsetPos.x + x * _mulPositionX, _offsetPos.y + y * _mulPositionY);
                 Enemy enemy = Instantiate(_enemyPrefabs[y], worldPos, Quaternion.identity, transform);
+                enemy.Init(_score, _win, _hp);
                 GridEnemys[x, y] = enemy;
             }
         }

@@ -22,7 +22,7 @@ public class BulletLogic
     public bool CheckHit(UnityEngine.Transform curPosition)
     {
         float distance = Vector2.Distance(_previousStep, curPosition.position);
-        RaycastHit2D hit = Physics2D.CircleCast(_previousStep, curPosition.localScale.x / 2, curPosition.TransformDirection(-_dir), distance, _hitLayerMask);
+        RaycastHit2D hit = Physics2D.CircleCast(_previousStep, curPosition.localScale.x / 2, curPosition.TransformDirection(-_dir), distance, _hitLayerMask);     
         if (hit)
         {
             if (hit.collider.TryGetComponent(out IDamageble damageble))

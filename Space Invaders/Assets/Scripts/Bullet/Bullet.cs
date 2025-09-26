@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour, IDamageble
+public class Bullet : MonoBehaviour
 {
     private float _speed;
     private float _lifeTime;
@@ -16,8 +16,19 @@ public class Bullet : MonoBehaviour, IDamageble
     }
     private void FixedUpdate()
     {
-        Check();
         MoveBullet();
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(LayerMaskUtil.ContainsLayer(_hitLayerMask, collision.gameObject))
+        {
+            if (collision.TryGetComponent(out IDamageble damageble))
+            {
+                damageble.TakeDamage(_damage);
+                Destroy(gameObject);
+            }
+            Destroy(gameObject);
+        }
     }
     public void Init(int damage, float speed, float lifeTime)
     {
@@ -26,36 +37,8 @@ public class Bullet : MonoBehaviour, IDamageble
         _lifeTime = lifeTime;
         _logic = new BulletLogic(_speed, _damage, _hitLayerMask, _dir, _previousStep);
     }
-    public virtual void MoveBullet()
+    public void MoveBullet()
     {
-        Vector2 moveVector = _logic.CalculateMovement(Time.fixedDeltaTime);
-        transform.Translate(moveVector);
-    }
-    public void Check()
-    {
-        if (CheckHit())
-        {
-            Destroy(gameObject);
-        }
-    }
-    public bool CheckHit()
-    {
-        float distance = Vector2.Distance(_previousStep, transform.position);
-        RaycastHit2D hit = Physics2D.CircleCast(_previousStep, transform.localScale.x / 2, _dir, distance, _hitLayerMask);
-        if (hit && hit.collider.gameObject != gameObject)
-        {
-            if (hit.collider.TryGetComponent(out IDamageble damageble))
-            {
-                damageble.TakeDamage(_damage);
-                return true;
-            }
-            return true;
-        }
-        _previousStep = transform.position;
-        return false;
-    }
-    public void TakeDamage(int damage)
-    {
-        Destroy(gameObject);
+        transform.Translate(_dir * _speed * Time.fixedDeltaTime);
     }
 }

@@ -5,12 +5,17 @@ public class EnemyShoot : MonoBehaviour
 {
     [SerializeField] private SpawnEnemy _spawnEnemy;
     [SerializeField] private float _timeBetweenShoot;
+    [SerializeField] private PlayerWin _win;
     private void Start()
     {
         StartCoroutine(CDBetweenShoot());
     }
     private void Shoot()
     {
+        if (_win.CheckWin())
+        {
+            return;
+        }
         int rnd = Random.Range(0, _spawnEnemy.GridEnemys.GetLength(0));
         if(_spawnEnemy.GridEnemys[rnd, _spawnEnemy.GridEnemys.GetLength(1) - 1] == null)
         {

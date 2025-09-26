@@ -44,6 +44,15 @@ public partial class @Control: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""dcea2c3e-d6ec-4811-a7d7-faa400107717"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -81,6 +90,72 @@ public partial class @Control: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""710d89a6-8904-47bf-82c0-d6fe70e87714"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerMove"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""c37e3086-7fd0-4a98-8bfb-ac186ad93abb"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""f71f40d4-ecfe-4395-8e0e-b66902175a4f"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""2365a663-083e-4d30-98e1-c7bf4ae01b6d"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerMove"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a9db2257-623a-4fe3-9864-e1d4ace6b34a"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""9718bfe7-52f6-4878-9309-dfc7296da8c5"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""36742045-1519-415e-9d33-b103d5bc6d92"",
                     ""path"": ""<Keyboard>/space"",
@@ -88,6 +163,39 @@ public partial class @Control: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PlayerShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b76e7ebf-cbb2-41b7-928c-fe4b0ee8a10b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerShoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db4f178e-9d46-44d3-be54-777d3665428b"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4df8c289-5467-475a-ba52-7621cf6f8a2c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -100,6 +208,7 @@ public partial class @Control: IInputActionCollection2, IDisposable
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
         m_Main_PlayerMove = m_Main.FindAction("PlayerMove", throwIfNotFound: true);
         m_Main_PlayerShoot = m_Main.FindAction("PlayerShoot", throwIfNotFound: true);
+        m_Main_Reload = m_Main.FindAction("Reload", throwIfNotFound: true);
     }
 
     ~@Control()
@@ -168,12 +277,14 @@ public partial class @Control: IInputActionCollection2, IDisposable
     private List<IMainActions> m_MainActionsCallbackInterfaces = new List<IMainActions>();
     private readonly InputAction m_Main_PlayerMove;
     private readonly InputAction m_Main_PlayerShoot;
+    private readonly InputAction m_Main_Reload;
     public struct MainActions
     {
         private @Control m_Wrapper;
         public MainActions(@Control wrapper) { m_Wrapper = wrapper; }
         public InputAction @PlayerMove => m_Wrapper.m_Main_PlayerMove;
         public InputAction @PlayerShoot => m_Wrapper.m_Main_PlayerShoot;
+        public InputAction @Reload => m_Wrapper.m_Main_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -189,6 +300,9 @@ public partial class @Control: IInputActionCollection2, IDisposable
             @PlayerShoot.started += instance.OnPlayerShoot;
             @PlayerShoot.performed += instance.OnPlayerShoot;
             @PlayerShoot.canceled += instance.OnPlayerShoot;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
@@ -199,6 +313,9 @@ public partial class @Control: IInputActionCollection2, IDisposable
             @PlayerShoot.started -= instance.OnPlayerShoot;
             @PlayerShoot.performed -= instance.OnPlayerShoot;
             @PlayerShoot.canceled -= instance.OnPlayerShoot;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -220,5 +337,6 @@ public partial class @Control: IInputActionCollection2, IDisposable
     {
         void OnPlayerMove(InputAction.CallbackContext context);
         void OnPlayerShoot(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

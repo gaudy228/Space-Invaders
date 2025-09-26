@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageble
@@ -9,6 +8,23 @@ public class Enemy : MonoBehaviour, IDamageble
     [SerializeField] private int _damageBullet;
     [SerializeField] private float _speedBullet;
     [SerializeField] private float _lifeTimeBullet;
+    [SerializeField] private LayerMask _goalLayerMask;
+    private Score _score;
+    private PlayerWin _win;
+    private PlayerHP _playerHP;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(LayerMaskUtil.ContainsLayer(_goalLayerMask, collision.gameObject))
+        {
+            _playerHP.OnDeadPlayer?.Invoke();
+        }
+    }
+    public void Init(Score score, PlayerWin win, PlayerHP hp)
+    {
+        _playerHP = hp;
+        _score = score;
+        _win = win;
+    }
     public void TakeDamage(int damage)
     {
         _hp -= damage;
@@ -23,6 +39,8 @@ public class Enemy : MonoBehaviour, IDamageble
     }
     private void Dead()
     {
+        _score.AddScore(_countScore);
+        _win.DeadEnemy();
         Destroy(gameObject);
     }
     public void Shoot()

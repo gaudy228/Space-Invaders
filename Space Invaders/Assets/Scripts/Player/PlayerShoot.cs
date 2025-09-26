@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
@@ -6,6 +7,8 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private int _damageBullet;
     [SerializeField] private float _speedBullet;
     [SerializeField] private float _lifeTimeBullet;
+    [SerializeField] private float _timeBetweenShoot;
+    private bool _canShoot = true;
     private Control _control;
     private void Awake()
     {
@@ -22,7 +25,17 @@ public class PlayerShoot : MonoBehaviour
     }
     private void Shoot()
     {
-       Bullet bullet = Instantiate(_bullet, transform.position, Quaternion.identity);
-       bullet.Init(_damageBullet, _speedBullet, _lifeTimeBullet);
+       if(_canShoot)
+       {
+            Bullet bullet = Instantiate(_bullet, transform.position, Quaternion.identity);
+            bullet.Init(_damageBullet, _speedBullet, _lifeTimeBullet);
+            StartCoroutine(CDBetweenShoot());
+       }
+    }
+    private IEnumerator CDBetweenShoot()
+    {
+        _canShoot = false;
+        yield return new WaitForSeconds(_timeBetweenShoot);
+        _canShoot = true;
     }
 }

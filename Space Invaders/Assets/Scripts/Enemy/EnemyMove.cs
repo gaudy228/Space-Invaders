@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
-    [SerializeField] private float _speed;
+    [SerializeField] private float _distance;
     [SerializeField] private float _timeBeforeMove;
     private void Start()
     {
@@ -11,7 +11,7 @@ public class EnemyMove : MonoBehaviour
     }
     private void Move()
     {
-        transform.Translate(-Vector2.up * _speed * Time.deltaTime);
+        transform.Translate(-Vector2.up * _distance * Time.deltaTime);
         StartCoroutine(CDBetweenMove());
     }
     private IEnumerator CDBetweenMove()
